@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello Page</title>
+	
+
+<link href="http://l5abweb01/js/jquery-ui.css" rel="stylesheet" type="text/css"/>
+<script src="http://l5abweb01/js/jquery.min.js"></script>
+<script src="http://l5abweb01/js/highcharts.js"></script>
+
+<style>
+div {
+width: 300px;
+height: 300px;
+float: left;
+}
+</style>
+
+</head>
+<body>
+
+
+
+<script type="text/javascript"> 
+var data = [
+{{data}}
+]
+for (i = 0; i < data.length; i++) {
+var d = data[i]
+var c = 'test' + i
+get_chart(c,d)
+}
+
+function get_chart(c,d) {
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+             //取得div容器的id
+                renderTo: c,
+                zoomType: 'xy',
+                //折線圖
+                type: 'line',
+                //右方間距
+                marginRight: 10,
+                marginTop: 10,
+                //下方間距
+                marginBottom: 70
+            },
+            title: {
+                text: '',
+                //x: -20 //位置至中
+            },
+            subtitle: {
+                //text: 'Array / CF',
+                //x: -20
+            },
+            credits: {
+             //隱藏官方連結
+             enabled: false
+             },
+            xAxis: {
+             //x軸的座標點
+             //categories: ['M001', 'M002', 'M003', 'M004', 'M005', 'M006', 'M007', 'M008', 'M009', 'M010', 'M011', 'M012']
+            },
+            yAxis: {
+                title: {
+                 //Y軸表頭
+                    text: ''
+                },
+            },
+            tooltip: {
+                formatter: function() {
+                        return '<b>'+ this.series.name +'</b><br/>'+
+                        this.x +': '+ this.y;
+                }
+            },
+
+			legend:{ enabled:false },
+            
+plotOptions: {
+        line: {
+            dataLabels: {
+                enabled: true
+            }},
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    format: '{point.y:.1f}', // one decimal
+                    style: {
+                        //textShadow: '0 0 3px black'
+                        fontSize: '8px',
+                    }
+                }
+            }
+        },
+ 
+            
+            series: [
+			{data: d}
+			]
+        });
+    });
+  
+});
+document.write("<div id='" + c + "'></div>")
+}
+</script>
+
+
+
+
+</body>
+</html>
